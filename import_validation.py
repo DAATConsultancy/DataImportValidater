@@ -10,7 +10,6 @@ datadir = "/Users/donaldposthuma/Documents/Klanten/ExperienceData/NationaleNeder
 os.chdir(datadir)
 
 
-
 # Location of raw data
 inputpath = 'rawdata/'
 
