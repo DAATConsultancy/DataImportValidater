@@ -129,12 +129,15 @@ def main(argv):
                     # print('end of line read')
                     line_count = line_count + 1
                     state = STATE_NULL
+                elif char == '"':
+                    # leave current_field alone and do not add quote
+                    state = STATE_EXPECTING_LINE_END # and try whether the next one is a semicolon
                 else:
-                    # instead of closing the last field, the last quote was an 'internal quote' and will be removed from the current field
-                    current_field = current_field[0:len(current_field)-1] + char
+                    # instead of closing the last field, the last quote was an 'internal quote' and will be left out from the current field
+                    current_field = current_field + char
                     state = STATE_FIELD # and stay in last field
-                    # error: expecting line end because all expected fields were read
-                    raise ParseException('expecting line end (field ' + str(field_count) + ' of ' + str(num_fields) + ' read), line ' + str(line_count) + ', character ' + str(character_count))
+                    # # error: expecting line end because all expected fields were read
+                    # raise ParseException('expecting line end, found "' + char + '" (field ' + str(field_count) + ' of ' + str(num_fields) + ' read), line ' + str(line_count) + ', character ' + str(character_count))
 
 if __name__ == '__main__':
     try:
